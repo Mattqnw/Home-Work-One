@@ -22,11 +22,12 @@ app.use(bodyParser.json())
     })
     //res.render(__dirname+ '/views/layouts/home', {cads: cads})
   })
+  //cadastro dos forms
  app.get('/cad', function(req,res){
     res.render(__dirname + '/views/layouts/formulario')
 
  })
-
+//form postagens
  app.post('/form', function(req,res){
    Cad.create({
      titulo: req.body.titulo,
@@ -37,8 +38,18 @@ app.use(bodyParser.json())
        res.send("houve um erro: "+erro)
      })
    })
-   //res.send("Texto: "+req.body.titulo+" Conteudo:"+req.body.conteudo)
-  
+   
+  //res.send("Texto: "+req.body.titulo+" Conteudo:"+req.body.conteudo)
+
+  //Deletar postagens 
+  app.get('/deletar/:id',function(req,res){
+   Cad.destroy({where: {'id': req.params.id}}).then(function(){
+   res.send("Postagem deletada com sucesso!")
+   }).catch(function(erro){
+     res.send("Esta postagem não existe! ")
+   })
+
+  })
 
  //Conexão Localhost porta 8081
 app.listen(8081, function(){
